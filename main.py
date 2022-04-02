@@ -15,17 +15,19 @@ korbyg = pygame.image.load("korby gauche.png")
 korbyg2 = pygame.image.load("korby gauche 2.png")
 bg = pygame.image.load("testbg1.jpg")
 
-# window properties
-window = pygame.display.set_mode((1800,1000))
-pygame.mouse.set_visible(0)
-
 # vars definition
 mousedwn = False
 pas = 3
-jpas = 0.5
+jpas = 1
 xk = 900
 yk = 600
 xd = 0
+jump=False
+ckorby=korby
+
+# window properties
+window = pygame.display.set_mode((1800,1000))
+pygame.mouse.set_visible(0)
 
 
 # game loop (whole game, to keep the window open)
@@ -36,7 +38,7 @@ while running == True:
             running=False
     window.fill((0,0,0))
     window.blit(bg,(0,0))
-    window.blit(korby,(xk,yk))
+    window.blit(ckorby,(xk,yk))
     pygame.display.flip()
         
     if event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
@@ -53,10 +55,11 @@ while running == True:
     # keyboard controls
     if event.type==pygame.KEYDOWN:
         if event.key==pygame.K_RIGHT:
-            xd=xd+pas
-            # + animation
+            xk=xk+pas
+            ckorby=korby2
         if event.key==pygame.K_LEFT:
-            xd=xd-pas
+            xk=xk-pas
+            ckorby=korbyg
         if event.key==pygame.K_UP:
             jump=True
             for ijp in range(5):
@@ -68,9 +71,12 @@ while running == True:
             running=False
             pygame.quit()
 
+    # if event.type==pygame.KEYUP and jump==False:
+
+
     if event.type==pygame.KEYUP and jump==True:
         while yk<600:
-            yk=yk+jpas
+            yk=yk+jpas*2
             window.blit(bg,(0,0))
             window.blit(korby,(xk,yk))
             pygame.display.flip()
