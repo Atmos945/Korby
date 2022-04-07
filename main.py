@@ -1,4 +1,4 @@
-# KORBY  by Gu://3m and Ordnalessa
+# KORBY  by LastMeridian_, Ordnalessa, Cofordix, and Lea
 # PS: un 20/20 serait le bienvenu :)
 
 import pygame, os, time, math
@@ -11,8 +11,9 @@ pygame.init()
 # load images
 korby_r = pygame.image.load("korby_r.gif")
 korby_l = pygame.image.load("korby_l.gif")
-korby_s = pygame.image.load("korby_s.gif")
-korby_j = pygame.image.load("korby__j.gif")
+korby_s = pygame.image.load("korby_s.png")
+korby_j = pygame.image.load("korby_j.png")
+korby_i = pygame.image.load("korby_i.png")
 bg = pygame.image.load("bg.png")
 # ig = pygame.image.load('ig.png')
 # fg = pygame.image.load('level.png')
@@ -20,17 +21,19 @@ bg = pygame.image.load("bg.png")
 # vars definition
 mousedwn = False
 pas = 3
-jpas = 1
+jpas = 2
 xk = 900
 yk = 600
 xd = 0
 jump=False
-ckorby=korby_r
+ckorby=korby_s
 
 
 # window properties
 window = pygame.display.set_mode((1800,1000))
 pygame.mouse.set_visible(0)
+pygame.display.set_icon(korby_i)
+pygame.display.set_caption('SuperKorby 3000 premium deluxe')
 
 
 # game loop (whole game, to keep the window open)
@@ -58,7 +61,7 @@ while running == True:
     # keyboard controls
     if event.type==pygame.KEYDOWN:
         if event.key==pygame.K_RIGHT:
-            xd=xd+pas
+            xk=xk+pas
             ckorby=korby_r
         if event.key==pygame.K_LEFT:
             xk=xk-pas
@@ -79,7 +82,7 @@ while running == True:
 
 
     if event.type==pygame.KEYUP and jump==False:
-        ckroby=korby_s
+        ckorby=korby_s
 
     if event.type==pygame.KEYUP and jump==True:
         while yk<600:
@@ -88,6 +91,7 @@ while running == True:
             window.blit(ckorby,(xk,yk))
             pygame.display.flip()
         jump = False
+        ckorby = korby_s
 
 
 
