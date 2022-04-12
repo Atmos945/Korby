@@ -26,7 +26,8 @@ xk = 900
 yk = 600
 xd = 0
 jump=False
-ckorby=korby_s
+flight=False
+ckorby=korby_s 
 
 
 # window properties
@@ -47,14 +48,14 @@ while running == True:
     window.blit(ckorby,(xk,yk))
     pygame.display.flip()
         
+        # detect mouse click
     if event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
         mousedwn=True
-        # avaler/recracher
     if event.type==pygame.MOUSEBUTTONUP and event.button==1:
         mousedwn=False
 
     # curseur custom
-    # if event.type == pygame.MOUSEMOTION:
+    # if event.type == pygame.MOUSEMOTION and pause == True:
         # xm=event.pos[0]
         # ym=event.pos[1]
     
@@ -67,7 +68,7 @@ while running == True:
             xk=xk-pas
             ckorby=korby_l
         if event.key==pygame.K_UP:
-            jump=True
+            flight=True
             ckroby=korby_j
             for ijp in range(5):
                 yk=yk-jpas/2
@@ -81,17 +82,25 @@ while running == True:
     # if event.type==pygame.KEYUP and jump==False:
 
 
-    if event.type==pygame.KEYUP and jump==False:
+    if event.type==pygame.KEYUP and flight==False:
         ckorby=korby_s
 
-    if event.type==pygame.KEYUP and jump==True:
-        while yk<600:
+    if event.type==pygame.KEYUP and flight==True:
+        if yk<600:
             yk=yk+jpas*2
             window.blit(bg,(0,0))
             window.blit(ckorby,(xk,yk))
             pygame.display.flip()
-        jump = False
         ckorby = korby_s
+
+    # if flight == True:
+    #     yk=yk+jpas*2
+    #         window.blit(bg,(0,0))
+    #         window.blit(ckorby,(xk,yk))
+    #         pygame.display.flip()
+    
+    # if yk>=600:
+    #     flight==False
 
 
 
