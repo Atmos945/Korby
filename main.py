@@ -1,12 +1,15 @@
 # KORBY  by LastMeridian_, Ordnalessa, Cofordix, and Lea
 # PS: un 20/20 serait le bienvenu :)
+version = 'Version Dev 1.3.5'
 
-import pygame, os, time, math
+
+import pygame, os, time, math, ctypes
 from random import randint
 
 # init
 os.system('cls')
 pygame.init()
+print(version)
 
 # load images
 #korby_r = pygame.image.load("korby_r.gif")
@@ -31,12 +34,17 @@ while run:
 
 
 # vars definition
-mousedwn = False
-pas = 3
-jpas = 2
+user32 = ctypes.windll.user32
+screensize = [user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)]
+print('Screen Resolution is ',screensize)
+print("Note that screens with low resolution or high scaling are not supported")
 xk = 900
 yk = 600
 xd = 0
+mousedwn = False
+pas = 3
+jpas = 2
+# import csv kbctrl
 jump=False
 flight=False
 ckorby=korby_s 
@@ -82,11 +90,17 @@ while running == True:
         if event.key==pygame.K_UP:
             flight=True
             ckroby=korby_j
-            for ijp in range(5):
-                yk=yk-jpas/2
-        # if event.key==pygame.K_DOWN:
+            yk=yk-jpas*3.5
+        if event.key==pygame.K_DOWN:
             # if yk>600:
-                # yk=yk+pas*2
+            yk=yk+pas*6
+        if event.key==pygame.K_k:
+            # replace by input()
+            kcright = pygame.K_RIGHT
+            kcleft = pygame.K_LEFT
+            kcup = pygame.K_UP
+            kcp = pygame.K_p
+            # export as csv
         if event.key==pygame.K_ESCAPE:
             running=False
             pygame.quit()
@@ -99,12 +113,15 @@ while running == True:
 
     if event.type==pygame.KEYUP and flight==True:
         if yk<600:
-            yk=yk+jpas*2
+            yk=yk+jpas*4
             window.blit(bg,(0,0))
             window.blit(ckorby,(xk,yk))
             pygame.display.flip()
         ckorby = korby_s
 
+    if yk>=600:
+        flight=False
+        yk = 600
     # if flight == True:
     #     yk=yk+jpas*2
     #         window.blit(bg,(0,0))
