@@ -22,12 +22,6 @@ bg = pygame.image.load("bg.png")
 korby_s_r = [ pygame.image.load("korby_r1.png"), pygame.image.load("korby_r2.png"), pygame.image.load("korby_r3.png"), pygame.image.load("korby_r4.png"), pygame.image.load("korby_r5.png"), pygame.image.load("korby_r6.png"), pygame.image.load("korby_r7.png"), pygame.image.load("korby_r8.png") ]
 clock = pygame.time.Clock() 
 value = 0
-run = True
-while run:
-     clock.tick(12)
-     if value >= len(korby_s_r):
-        value = 0
-      korby_r=korby_s_r[value]
 
 
 # vars definition
@@ -59,6 +53,11 @@ while running == True:
     window.blit(bg,(0,0))
     window.blit(ckorby,(xk,yk))
     pygame.display.flip()
+    clock.tick(12)
+    if value >= len(korby_s_r):
+        value = 0
+        korby_r=korby_s_r[value]
+
         
         # detect mouse click
     if event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
