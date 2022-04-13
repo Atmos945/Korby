@@ -12,7 +12,7 @@ pygame.init()
 print(version)
 
 # load images
-#korby_r = pygame.image.load("korby_r.gif")
+korby_r = pygame.image.load("korby_r.gif")
 korby_l = pygame.image.load("korby_l.gif")
 korby_s = pygame.image.load("korby_s.png")
 korby_j = pygame.image.load("korby_j.png")
@@ -20,18 +20,6 @@ korby_i = pygame.image.load("korby_i.png")
 bg = pygame.image.load("bg.png")
 # ig = pygame.image.load('ig.png')
 # fg = pygame.image.load('level.png')
-
-#load sprite
-korby_s_r = [ pygame.image.load("korby_r1.png"), pygame.image.load("korby_r2.png"), pygame.image.load("korby_r3.png"), pygame.image.load("korby_r4.png"), pygame.image.load("korby_r5.png"), pygame.image.load("korby_r6.png"), pygame.image.load("korby_r7.png"), pygame.image.load("korby_r8.png") ]
-clock = pygame.time.Clock() 
-value = 0
-run = True
-while run:
-     clock.tick(12)
-     if value >= len(korby_s_r):
-        value = 0
-      korby_r=korby_s_r[value]
-
 
 # vars definition
 user32 = ctypes.windll.user32
@@ -130,5 +118,7 @@ while running == True:
     
     # if yk>=600:
     #     flight==False
+
+
 
 pygame.quit()
