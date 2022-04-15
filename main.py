@@ -1,12 +1,16 @@
 # KORBY  by LastMeridian_, Ordnalessa, Cofordix, and Lea
 # PS: un 20/20 serait le bienvenu :)
+version = 'Version Dev 1.3.5'
 
-import pygame, os, time, math
+
+from multiprocessing.sharedctypes import Value
+import pygame, os, time, math, ctypes
 from random import randint
 
 # init
 os.system('cls')
 pygame.init()
+print(version)
 
 # load images
 #korby_r = pygame.image.load("korby_r.gif")
@@ -18,19 +22,35 @@ bg = pygame.image.load("bg.png")
 # ig = pygame.image.load('ig.png')
 # fg = pygame.image.load('level.png')
 
-#load sprite
-korby_s_r = [ pygame.image.load("korby_r1.png"), pygame.image.load("korby_r2.png"), pygame.image.load("korby_r3.png"), pygame.image.load("korby_r4.png"), pygame.image.load("korby_r5.png"), pygame.image.load("korby_r6.png"), pygame.image.load("korby_r7.png"), pygame.image.load("korby_r8.png") ]
-clock = pygame.time.Clock() 
-value = 0
 
+#sprite
+korby_s_r = [ pygame.image.load("korby_r1.png"), pygame.image.load("korby_r2.png"), pygame.image.load("korby_r3.png"), pygame.image.load("korby_r4.png"), pygame.image.load("korby_r5.png"), pygame.image.load("korby_r6.png"), pygame.image.load("korby_r7.png"), pygame.image.load("korby_r8.png") ]
+clock= pygame.time.Clock()
+value = 0
+key_pressed_is = pygame.key.get_pressed()
+#Korby_r
+def korby_f_r(): 
+    clock.tick(12)
+    global value
+    if value >= len(korby_s_r):
+        value = 0
+    else :
+        value=value
+    korby_r = korby_s_r[value]
+#fin
 
 # vars definition
-mousedwn = False
-pas = 3
-jpas = 2
+user32 = ctypes.windll.user32
+screensize = [user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)]
+print('Screen Resolution is ',screensize)
+print("Note that screens with low resolution or high scaling are not supported")
 xk = 900
 yk = 600
 xd = 0
+mousedwn = False
+pas = 3
+jpas = 2
+# import csv kbctrl
 jump=False
 flight=False
 ckorby=korby_s 
@@ -52,12 +72,8 @@ while running == True:
     window.fill((0,0,0))
     window.blit(bg,(0,0))
     window.blit(ckorby,(xk,yk))
+    korby_f_r()
     pygame.display.flip()
-    clock.tick(12)
-    if value >= len(korby_s_r):
-        value = 0
-        korby_r=korby_s_r[value]
-
         
         # detect mouse click
     if event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
@@ -74,21 +90,31 @@ while running == True:
     if event.type==pygame.KEYDOWN:
         if event.key==pygame.K_RIGHT:
             xk=xk+pas
-            ckorby=korby_r
+            ckorby=korby_s_r[value]
         if event.key==pygame.K_LEFT:
             xk=xk-pas
             ckorby=korby_l
         if event.key==pygame.K_UP:
             flight=True
             ckroby=korby_j
-            for ijp in range(5):
-                yk=yk-jpas/2
-        # if event.key==pygame.K_DOWN:
+            yk=yk-jpas*3.5
+        if event.key==pygame.K_DOWN:
             # if yk>600:
-                # yk=yk+pas*2
+            yk=yk+pas*6
+        if event.key==pygame.K_k:
+            # replace by input()
+            kcright = pygame.K_RIGHT
+            kcleft = pygame.K_LEFT
+            kcup = pygame.K_UP
+            kcp = pygame.K_p
+            # export as csv
         if event.key==pygame.K_ESCAPE:
             running=False
             pygame.quit()
+
+        if   event.key==pygame.K_RIGHT: 
+            value = value+1
+
 
     # if event.type==pygame.KEYUP and jump==False:
 
@@ -98,12 +124,15 @@ while running == True:
 
     if event.type==pygame.KEYUP and flight==True:
         if yk<600:
-            yk=yk+jpas*2
+            yk=yk+jpas*4
             window.blit(bg,(0,0))
             window.blit(ckorby,(xk,yk))
             pygame.display.flip()
         ckorby = korby_s
 
+    if yk>=600:
+        flight=False
+        yk = 600
     # if flight == True:
     #     yk=yk+jpas*2
     #         window.blit(bg,(0,0))
@@ -112,5 +141,7 @@ while running == True:
     
     # if yk>=600:
     #     flight==False
+
+
 
 pygame.quit()
