@@ -23,6 +23,13 @@ bg = pygame.image.load("assets/bg.png")
 # ig = pygame.image.load('ig.png')
 # fg = pygame.image.load('level.png')
 
+#musiques
+musique_fond = 'KORBY_METAL.wav'
+pygame.init()
+pygame.mixer.init()
+pygame.mixer.music.load(musique_fond)
+pygame.mixer.music.play(-1) 
+
 # vars definition
 user32 = ctypes.windll.user32
 screensize = [user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)]
