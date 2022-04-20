@@ -4,7 +4,6 @@ version = 'Version Dev 1.3.7'
 
 
 import pygame, os, random, time, math, ctypes, csv
-from multiprocessing.sharedctypes import Value
 
 # init
 os.system('cls')
@@ -12,11 +11,13 @@ pygame.init()
 print(version)
 
 # load images
-# korby_r = pygame.image.load("korby_r.gif")
 korby_rframes = [ pygame.image.load("assets/korby_r1.png"), pygame.image.load("assets/korby_r2.png"), pygame.image.load("assets/korby_r3.png"), pygame.image.load("assets/korby_r4.png"), pygame.image.load("assets/korby_r5.png"), pygame.image.load("assets/korby_r6.png"), pygame.image.load("assets/korby_r7.png"), pygame.image.load("assets/korby_r8.png") ]
-korby_l = pygame.image.load("assets/korby_l.gif")
+korby_lframes = [ pygame.image.load("assets/korby_l1.png"), pygame.image.load("assets/korby_l2.png"), pygame.image.load("assets/korby_l3.png"), pygame.image.load("assets/korby_l4.png"), pygame.image.load("assets/korby_l5.png"), pygame.image.load("assets/korby_l6.png"), pygame.image.load("assets/korby_l7.png"), pygame.image.load("assets/korby_l8.png") ]
 korby_s = pygame.image.load("assets/korby_s.png")
 korby_j = pygame.image.load("assets/korby_j.png")
+korby_f = pygame.image.load("assets/korby_f.png")
+korby_fl = pygame.image.load("assets/korby_fl.png")
+korby_fr = pygame.image.load("assets/korby_fr.png")
 korby_i = pygame.image.load("assets/korby_i.png")
 bg = pygame.image.load("assets/bg.png")
 # ig = pygame.image.load('ig.png')
@@ -31,7 +32,7 @@ xk = 900
 yk = 600
 xd = 0
 mousedwn = False
-pas = 6
+pas = 60
 jpas = 4
 # import csv kbctrl
 jump=False
@@ -40,21 +41,29 @@ ckorby=korby_s
 kccsv = open('kbctrl.csv', 'w', encoding='UTF8')
 kpressed = pygame.key.get_pressed()
 clock= pygame.time.Clock()
-framer = 0
+frame = 0
 
 def korby_r_a(): 
     clock.tick(12)
-    global framer
-    if framer >= len(korby_rframes):
-        framer = 0
+    global frame
+    if frame >= len(korby_rframes):
+        frame = 0
     else :
-        framer=framer
-    korby_r = korby_rframes[framer]
+        frame=frame
+    korby_r = korby_rframes[frame]
+def korby_l_a(): 
+    clock.tick(12)
+    global frame
+    if frame >= len(korby_lframes):
+        frame = 0
+    else :
+        frame=frame
+    korby_l = korby_lframes[frame]
 
 
 # window properties
 window = pygame.display.set_mode((1800,1000))
-pygame.mouse.set_visible(0)
+# pygame.mouse.set_visible(0)
 pygame.display.set_icon(korby_i)
 pygame.display.set_caption('SuperKorby 3000 premium deluxe')
 
@@ -85,22 +94,29 @@ while running == True:
     if event.type==pygame.KEYDOWN:
         if event.key==pygame.K_RIGHT:
             if flight==True:
-                if kpressed[pygame.K_UP]==False:
-                    xk=xk+pas
-                    yk=yk-jpas*3
+                    xk=xk+pas/10
+                    yk=yk+jpas
+                    ckorby = korby_fr
             else:
-                framer=framer+1
+                frame=frame+1
                 korby_r_a()
                 xk=xk+pas
-                ckorby=korby_rframes[framer]
+                ckorby=korby_rframes[frame]
 
         if event.key==pygame.K_LEFT:
-            xk=xk-pas
-            ckorby=korby_l
+            if flight==True:
+                xk=xk-pas/10
+                yk=yk+jpas
+                ckorby = korby_fl
+            else:
+                frame=frame+1
+                korby_l_a()
+                xk=xk-pas
+                ckorby=korby_lframes[frame]
 
         if event.key==pygame.K_UP:
             flight=True
-            ckroby=korby_j
+            ckorby=korby_j
             if yk>-150:
                 yk=yk-jpas*3.5
 
@@ -130,6 +146,8 @@ while running == True:
         ckorby=korby_s
 
     if event.type==pygame.KEYUP and flight==True:
+        ckorby = korby_f
+        
         if yk<600:
             yk=yk+jpas*4
             window.blit(bg,(0,0))
@@ -140,16 +158,6 @@ while running == True:
     if yk>=600:
         flight=False
         yk = 600
-        # ckorby = korby_s
-        
-    # if flight == True:
-    #     yk=yk+jpas*2
-    #         window.blit(bg,(0,0))
-    #         window.blit(ckorby,(xk,yk))
-    #         pygame.display.flip()
-    
-    # if yk>=600:
-    #     flight==False
 
 
 pygame.quit()
