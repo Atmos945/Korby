@@ -101,8 +101,8 @@ while running == True:
     # window.blit(mouse,(xm,ym))
     ofstx = xd - xk
     ofsty = 0 - yk
-    if korby_mask.overlap_area(level_mask,(ofstx,ofsty)):
-        print('collision')
+    if korby_mask.overlap(level_mask,(ofstx,ofsty)):
+        print(level_mask,(ofstx,ofsty))
         
         # detect mouse click
     if event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
