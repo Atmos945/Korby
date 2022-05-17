@@ -1,6 +1,6 @@
 # KORBY  by LastMeridian_, Ordnalessa, Cofordix, and Lelequeen
 # PS: un 20/20 serait le bienvenu :)
-kversion = '1.4.2'
+kversion = '1.5.1'
 
 
 import pygame, os, random, time, math, ctypes, csv, platform
@@ -14,18 +14,18 @@ print(f"Korby Dev {kversion}")
 print(f"Python {platform.python_version()}")
 
 # load
-korby_rframes = [ pygame.image.load("assets/1000/korby_r1.png"), pygame.image.load("assets/1000/korby_r2.png"), pygame.image.load("assets/1000/korby_r3.png"), pygame.image.load("assets/1000/korby_r4.png"), pygame.image.load("assets/1000/korby_r5.png"), pygame.image.load("assets/1000/korby_r6.png"), pygame.image.load("assets/1000/korby_r7.png"), pygame.image.load("assets/1000/korby_r8.png") ]
-korby_lframes = [ pygame.image.load("assets/1000/korby_l1.png"), pygame.image.load("assets/1000/korby_l2.png"), pygame.image.load("assets/1000/korby_l3.png"), pygame.image.load("assets/1000/korby_l4.png"), pygame.image.load("assets/1000/korby_l5.png"), pygame.image.load("assets/1000/korby_l6.png"), pygame.image.load("assets/1000/korby_l7.png"), pygame.image.load("assets/1000/korby_l8.png") ]
-korby_i = pygame.image.load("assets/1000/korby_i.png")
-korby_j = pygame.image.load("assets/1000/korby_j.png")
-korby_f = pygame.image.load("assets/1000/korby_f.png")
-korby_fl = pygame.image.load("assets/1000/korby_fl.png")
-korby_fr = pygame.image.load("assets/1000/korby_fr.png")
-korby_ico = pygame.image.load("assets/1000/korby_ico.png")
-bg = pygame.image.load("assets/1000/bg.png")
-lvl1 = pygame.image.load("assets/1000/lvl1.png")
-# mouse = pygame.image.load("assets/1000/cursor.png")
-pygame.mixer.music.load('assets/korby_8bit.wav')
+korby_rframes = [ pygame.image.load("assets/bw/korby_r1.png"), pygame.image.load("assets/bw/korby_r2.png"), pygame.image.load("assets/bw/korby_r3.png"), pygame.image.load("assets/bw/korby_r4.png"), pygame.image.load("assets/bw/korby_r5.png"), pygame.image.load("assets/bw/korby_r6.png"), pygame.image.load("assets/bw/korby_r7.png"), pygame.image.load("assets/bw/korby_r8.png") ]
+korby_lframes = [ pygame.image.load("assets/bw/korby_l1.png"), pygame.image.load("assets/bw/korby_l2.png"), pygame.image.load("assets/bw/korby_l3.png"), pygame.image.load("assets/bw/korby_l4.png"), pygame.image.load("assets/bw/korby_l5.png"), pygame.image.load("assets/bw/korby_l6.png"), pygame.image.load("assets/bw/korby_l7.png"), pygame.image.load("assets/bw/korby_l8.png") ]
+korby_i = pygame.image.load("assets/bw/korby_i.png")
+korby_j = pygame.image.load("assets/bw/korby_j.png")
+korby_f = pygame.image.load("assets/bw/korby_f.png")
+korby_fl = pygame.image.load("assets/bw/korby_fl.png")
+korby_fr = pygame.image.load("assets/bw/korby_fr.png")
+korby_ico = pygame.image.load("assets/bw/korby_ico.png")
+bg = pygame.image.load("assets/bw/bg.png")
+lvl1 = pygame.image.load("assets/bw/lvl1.png")
+# mouse = pygame.image.load("assets/bw/cursor.png")
+pygame.mixer.music.load('assets/korby_metal.wav')
 
 
 
