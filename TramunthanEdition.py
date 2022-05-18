@@ -1,9 +1,9 @@
 # KORBY  by LastMeridian_, Ordnalessa, Cofordix, and Lelequeen
 # PS: un 20/20 serait le bienvenu :)
-kversion = '1.5.1'
+kversion = '1.5.2'
 
 
-import os, time, ctypes, platform
+import os, time, ctypes, platform, pygame
 from pygame import *
 
 # init
@@ -31,19 +31,22 @@ print('Screen Resolution ',screensize)
 print("Note that screens with low resolution or high scaling are not supported")
 
 xfg = 0
-xk = 500
+xk = 800
 yk = 550
 floor = 550
 pas = 60
 jump = 40
 inair=False
-ckorby=korby_i
+frame = 0
+ckorby=korby_rframes[frame]
 #d kccsv = open('kbctrl.csv', 'w', encoding='UTF8')
 kpressed = key.get_pressed()
 clock= time.Clock()
 fps = 30
-frame = 0
 pause = True
+airtimer = 0
+safetimer = 60
+dangersaid  = False
 
 korby_mask = mask.from_surface(ckorby)
 crab_mask = ""#mask.from_surface(lvl1)
@@ -57,6 +60,7 @@ def korby_r_a():
     else :
         frame=frame
     korby_r = korby_rframes[frame]
+    clock.tick(30)
 
 def drawscreen():
     window.blit(bg,(0,0))
@@ -76,7 +80,7 @@ mixer.music.play(-1)
 # game loop
 running=True
 while running == True:
-    for event in event.get():
+    for event in pygame.event.get():
         if event.type==QUIT:
             running=False
     drawscreen()
@@ -85,52 +89,55 @@ while running == True:
     frame+=1
     korby_r_a()
 
-    # collisions
-    ofstx = xfg - xk
-    ofsty = 0 - yk
-    if korby_mask.overlap(crab_mask,(ofstx,ofsty)):
-        print(crab_mask,(ofstx,ofsty))
-        print('Korby got pinched by craby : Game Over')
-        
-        # detect mouse click
-    if event.type==MOUSEBUTTONDOWN and event.button==1:
-        mousedwn=True
-        print("msdwn")
-    if event.type==MOUSEBUTTONUP and event.button==1:
-        mousedwn=False
+    #d collisions
+    # ofstx = xfg - xk
+    # ofsty = 0 - yk
+    # if korby_mask.overlap(crab_mask,(ofstx,ofsty)):
+    #     print(crab_mask,(ofstx,ofsty))
+    #     print('Korby got pinched by craby : Game Over')
     
     # keyboard controls
     if event.type==KEYDOWN:
 
-        if event.key==K_UP:
+        if event.key==K_UP or event.key==K_SPACE:
             inair=True
             ckorby=korby_j
-            if yk>-150:
-                yk-=jump*3.5
+            if yk>0 and inair < 30:
+                yk-=jump
+            else:
+                while yk>floor:
+                    yk+=jump
 
         if event.key==K_DOWN:
-            # if yk>floor:
-            yk+=jump*5
+            yk+=jump
 
         if event.key==K_ESCAPE:
             running=False
             quit()
 
 
-    if event.type==KEYUP and inair==False:
-        ckorby=korby_i
+    if inair == False:
+        ckorby=korby_rframes[frame]
+        if yk>=floor:
+            yk = floor
 
     if event.type==KEYUP and inair==True:
         ckorby = korby_f
-        
         if yk<floor:
             yk+=jump*4
-            drawscreen()
+        if yk>=floor:
+            inair=False
+            yk = floor
 
-
-    if yk>=floor:
-        inair=False
-        yk = floor
-
+    # safetimer
+    if safetimer <= 0:
+        if dangersaid == True:
+            continue
+        else:
+            print("danger")
+            dangersaid=True
+    else:
+        safetimer -=1
+        print("Safetimer : ",safetimer)
 
 quit()

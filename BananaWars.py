@@ -1,6 +1,6 @@
 # KORBY  by LastMeridian_, Ordnalessa, Cofordix, and Lelequeen
 # PS: un 20/20 serait le bienvenu :)
-kversion = '1.5.1'
+kversion = '1.5.2'
 
 
 import pygame, os, random, time, math, ctypes, csv, platform
@@ -25,7 +25,7 @@ korby_ico = pygame.image.load("assets/bw/korby_ico.png")
 bg = pygame.image.load("assets/bw/bg.png")
 lvl1 = pygame.image.load("assets/bw/lvl1.png")
 # mouse = pygame.image.load("assets/bw/cursor.png")
-pygame.mixer.music.load('assets/korby_metal.wav')
+pygame.mixer.music.load('assets/korby_8bit.wav')
 
 
 
