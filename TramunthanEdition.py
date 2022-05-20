@@ -21,6 +21,8 @@ korby_j = image.load("assets/bw/korby_j.png")
 korby_f = image.load("assets/bw/korby_fr.png")
 korby_ico = image.load("assets/bw/korby_ico.png")
 bg = image.load("assets/bw/bg.png")
+fg = image.load("assets/bw/fg.png")
+fg_rect = fg.get_rect()
 mixer.music.load('assets/korby_metal.wav')
 
 
@@ -30,12 +32,14 @@ screensize = [user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)]
 print('Screen Resolution ',screensize)
 print("Note that screens with low resolution or high scaling are not supported")
 
+yfg = 591
 xfg = 0
+xfg2 = -1800
 xk = 800
 yk = 550
 floor = 550
 pas = 60
-jump = 40
+jump = 80
 inair=False
 frame = 0
 ckorby=korby_rframes[frame]
@@ -60,10 +64,12 @@ def korby_r_a():
     else :
         frame=frame
     korby_r = korby_rframes[frame]
-    clock.tick(30)
 
 def drawscreen():
     window.blit(bg,(0,0))
+    # window.blit(fg,fg_rect)
+    window.blit(fg,(xfg,yfg))
+    window.blit(fg,(xfg2,yfg))
     window.blit(ckorby,(xk,yk))
     display.update()
     clock.tick(fps)
@@ -80,14 +86,20 @@ mixer.music.play(-1)
 # game loop
 running=True
 while running == True:
-    for event in pygame.event.get():
-        if event.type==QUIT:
-            running=False
+
     drawscreen()
 
     # anim
     frame+=1
     korby_r_a()
+
+    # bg move
+    xfg2 -= 15
+    xfg -= 15
+    if xfg < -1800:
+        xfg = 1800
+    if xfg2 < -1800:
+        xfg2 = 1800
 
     #d collisions
     # ofstx = xfg - xk
@@ -96,6 +108,10 @@ while running == True:
     #     print(crab_mask,(ofstx,ofsty))
     #     print('Korby got pinched by craby : Game Over')
     
+    for event in pygame.event.get():
+        if event.type==QUIT:
+            running=False
+
     # keyboard controls
     if event.type==KEYDOWN:
 
