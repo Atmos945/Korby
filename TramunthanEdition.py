@@ -1,6 +1,7 @@
-# KORBY  by LastMeridian_, Ordnalessa, Cofordix, and Lelequeen
+# KORBY  by Alessandro S, Alexandre P, Léa B et Guillem G
+# Merci à Clément C, Théo O, Valentin C qui ont contribués à la conception des idées
 # PS: un 20/20 serait le bienvenu :)
-kversion = '1.6'
+kversion = '1.6.1'
 
 
 import os, time, ctypes, platform, pygame
@@ -25,7 +26,7 @@ dino_frames = [ image.load("assets/images/dino_1.png"), image.load("assets/image
 dino = image.load("assets/images/dino_1.png") # HAN-RIZ
 dino2 = image.load("assets/images/dino_1.png") # veloceraptor
 dino3 = image.load("assets/images/dino_1.png") # gourmy
-dino4 = image.load("assets/images/dino_1.png") # pterodactyle
+dino4 = image.load("assets/images/dino4.png") # pterodactyle
 bg = image.load("assets/images/bg.png")
 fg = image.load("assets/images/fg.png")
 pauseimg = image.load("assets/images/korby_i.png")
@@ -56,7 +57,7 @@ inair=False
 frame = 0
 framed = 0
 ckorby=korby_rframes[frame]
-health = 30
+health = 15
 killedby = "VOID"
 #d kccsv = open('kbctrl.csv', 'w', encoding='UTF8')
 kpressed = key.get_pressed()
@@ -155,7 +156,7 @@ while running == True:
         killedby = "Cristobal"
     if korby_mask.overlap(dino4_mask,(xdino4 - xk,ydino4 - yk)):
         health -= 1
-        killedby = "El Pterodactyl"
+        killedby = "Lleres del Pterodactyl"
     
     for event in pygame.event.get():
         if event.type==QUIT:
